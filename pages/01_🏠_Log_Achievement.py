@@ -42,6 +42,8 @@ raw = st.text_area(
     height=140
 )
 
+redirect_placeholder = st.empty()
+
 # Action: Save achievement & generate STAR story
 if st.button("Save & Generate STAR", disabled=st.session_state.star_generated):
     if not raw.strip():
@@ -54,10 +56,12 @@ if st.button("Save & Generate STAR", disabled=st.session_state.star_generated):
                 story = generate_star(s, user.id, ach.id, role, raw.strip())
                 s.commit()
 
-            st.success(f"✅ User `{user.display_name}` saved. STAR story created.")
-            st.text_area("Generated STAR Story", value=story.full_text or "", height=220)
+                st.success(f"✅ User `{user.display_name}` saved. STAR story created.")
+                st.text_area("Generated STAR Story", value=story.full_text or "", height=220)
 
-            time.sleep(5) 
-            st.toast("Redirecting to STAR Stories...", icon="➡️")
-            time.sleep(3) 
-            st.switch_page("pages/02_🧩_STAR_Stories.py")
+        st.session_state.star_generated = True
+    
+        with redirect_placeholder.container():
+            with st.spinner("Redirecting to STAR Stories..."):
+                time.sleep(5) 
+        st.switch_page("pages/02_🧩_STAR_Stories.py")
