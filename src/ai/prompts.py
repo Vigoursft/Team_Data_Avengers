@@ -21,22 +21,38 @@ FEEDBACK_USER = """Role: {role}
 Question: {question}
 Candidate answer: {answer}
 
-Score 1–5: clarity, technical_depth, structure, impact, relevance.
-Return STRICT JSON:
+Instructions:
+- Evaluate the candidate's answer strictly based on what is written. Do not assume missing details.
+- If the answer is weak (e.g., "test result", vague, or unrelated), reflect that honestly in the feedback.
+- Score the answer in 3 areas from 1 to 5:
+  - clarity
+  - technical_depth
+  - structure
+  - impact
+  - relevance
+
+- Provide:
+  - A rubric with the 3 scores.
+  - A short summary (1–2 lines) of strengths and weaknesses.
+  - 2–3 helpful improvement suggestions.
+
+Return ONLY valid JSON in this exact format:
+
 {{
-"rubric": {{
-"clarity": 4,
-"technical_depth": 3,
-"structure": 5,
-"impact": 4,
-"relevance": 5
-}},
-"summary": "A concise paragraph summarizing the answer’s strengths and weaknesses.",
-"suggestions": [
-"Improve structure by adding a clearer intro and conclusion.",
-"Include more metrics or specific results.",
-"Focus more on your personal contributions."
-]
+  "rubric": {{
+    "clarity": int,
+    "technical_depth": int,
+    "structure": int,
+    "impact": int,
+    "relevance": int
+  }},
+  "summary": "Your summary here.",
+  "suggestions": [
+    "First suggestion.",
+    "Second suggestion.",
+    "Third suggestion."
+  ]
 }}
-ONLY JSON.
+
+No markdown, no explanations — just clean JSON.
 """
