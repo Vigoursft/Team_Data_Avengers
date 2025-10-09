@@ -5,7 +5,8 @@ Define your SQLAlchemy models here.
 
 from __future__ import annotations
 
-from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm.decl_api import DeclarativeBase
 from sqlalchemy import Integer, String
 
 
