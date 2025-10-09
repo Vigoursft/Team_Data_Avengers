@@ -1,8 +1,3 @@
-"""Database engine and session setup.
-
-Adjust the DATABASE_URL in src/config.py or environment variables as needed.
-"""
-
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from src.config import settings
