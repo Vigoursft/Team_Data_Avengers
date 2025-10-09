@@ -51,7 +51,7 @@ if st.button("Save & Generate STAR", disabled=st.session_state.star_generated):
     else:
         with st.spinner("Generating STAR story..."):
             with SessionLocal() as s:
-                user = get_or_create_user(s, new_username, role)
+                user = get_or_create_user(s, active_username, role)
                 ach = create_achievement(s, user.id, role, raw.strip())
                 story = generate_star(s, user.id, ach.id, role, raw.strip())
                 s.commit()
