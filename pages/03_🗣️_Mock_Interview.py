@@ -33,13 +33,9 @@ if not questions:
     st.info("No questions yet for this user. Generate them from a STAR story first.")
 else:
     # Step 4: Pick question
-    q_map = {f"Q#{q.id}: {q.question_text[:80]}": q for q in questions}
+    q_map = {f"{i+1}. {q.question_text[:250]}": q for i, q in enumerate(questions)}
     choice = st.selectbox("Pick a question", list(q_map.keys()))
-    # role = st.selectbox(
-    #     "Role",
-    #     ["Backend Engineer", "Frontend Engineer", "Data Engineer", "DevOps / SRE"]
-    #     disabled=True
-    # )
+
     answer = st.text_area("Your answer (1–2 paragraphs)", height=200)
 
     if st.button("Get Feedback"):

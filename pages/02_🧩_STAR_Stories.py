@@ -30,13 +30,13 @@ with SessionLocal() as s:
                 st.markdown("**Full Story**")
                 st.write(story.full_text or "")
 
-                if st.button("Generate 6 Questions", key=f"gen_q_{story.id}"):
+                if st.button("Generate 5 Questions", key=f"gen_q_{story.id}"):
                     qs = generate_questions(
                         s,
                         user_id=story.user_id,
                         achievement_id=story.achievement_id,
                         star_text=story.full_text or "",
-                        n=6
+                        n=5
                     )
                     s.commit()
                     st.success(f"✅ {len(qs)} questions saved.")
