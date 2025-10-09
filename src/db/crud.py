@@ -57,3 +57,25 @@ def get_or_create_user(session: Session, display_name: str, primary_role: str | 
             session.flush()
     return user
 
+
+def insert_feedback(session: Session, user_id: int, answer_id: int, rubric: dict, summary: str, suggestions: str, model: str):
+    fb = Feedback(
+        user_id=user_id,
+        answer_id=answer_id,
+        rubric=rubric,
+        summary=summary,
+        suggestions=suggestions,
+        tokens_input=getattr(usage, "prompt_tokens", 0),
+        tokens_output=getattr(usage, "completion_tokens", 0),
+        model_used=model
+    )
+    session.add(fb)
+
+def insert_answer(session: Session, user_id: int, question_id: int, answer: str):
+    answer_obj = InterviewAnswer(
+        user_id=user_id,
+        question_id=question_id,
+        answer_text=answer
+    )
+    session.add(answer_obj)
+    return answer_obj

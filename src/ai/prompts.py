@@ -23,10 +23,20 @@ Candidate answer: {answer}
 
 Score 1–5: clarity, technical_depth, structure, impact, relevance.
 Return STRICT JSON:
-{
-  "rubric": {"clarity":int,"technical_depth":int,"structure":int,"impact":int,"relevance":int},
-  "summary": "...",
-  "suggestions": ["...","...","..."]
-}
+{{
+"rubric": {{
+"clarity": 4,
+"technical_depth": 3,
+"structure": 5,
+"impact": 4,
+"relevance": 5
+}},
+"summary": "A concise paragraph summarizing the answer’s strengths and weaknesses.",
+"suggestions": [
+"Improve structure by adding a clearer intro and conclusion.",
+"Include more metrics or specific results.",
+"Focus more on your personal contributions."
+]
+}}
 ONLY JSON.
 """

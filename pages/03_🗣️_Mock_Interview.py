@@ -38,6 +38,7 @@ else:
     # role = st.selectbox(
     #     "Role",
     #     ["Backend Engineer", "Frontend Engineer", "Data Engineer", "DevOps / SRE"]
+    #     disabled=True
     # )
     answer = st.text_area("Your answer (1–2 paragraphs)", height=200)
 
@@ -47,7 +48,8 @@ else:
             fb = generate_feedback(
                 s2,
                 user_id=selected_user.id,
-                role=role,
+                role=selected_user.primary_role,
+                question_id=qobj.id,
                 question=qobj.question_text,
                 answer=answer.strip()
             )
