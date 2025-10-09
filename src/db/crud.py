@@ -33,3 +33,27 @@ def dashboard_stats(session: Session):
         feedback=counts(Feedback),
         tokens=int(tokens)
     )
+
+def get_or_create_user(session: Session, display_name: str, primary_role: str | None = None) -> User:
+    """
+    Fetch a user by display_name (case-insensitive). If not found, create one.
+    Optionally set/refresh primary_role if provided.
+    """
+    display_name = (display_name or "").strip()
+    if not display_name:
+        display_name = "Demo User"
+
+    user = session.scalar(
+        select(User).where(func.lower(User.display_name) == display_name.lower()).limit(1)
+    )
+    if not user:
+        user = User(display_name=display_name, primary_role=primary_role)
+        session.add(user)
+        session.flush()
+    else:
+        # Update role if provided and different
+        if primary_role and user.primary_role != primary_role:
+            user.primary_role = primary_role
+            session.flush()
+    return user
+
