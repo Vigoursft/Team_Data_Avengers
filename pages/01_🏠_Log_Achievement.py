@@ -4,7 +4,7 @@ from src.db.engine import SessionLocal
 from src.db.crud import ensure_demo_user, create_achievement, get_or_create_user
 from src.services.star_service import generate_star
 from src.db.models import User
-
+import time
 
 st.set_page_config(page_title="Log Achievement", layout="wide")
 st.header("🏠 Log Achievement → Generate STAR")
@@ -27,7 +27,6 @@ if username_option == "➕ Add New User":
 else:
     active_username = username_option
 
-#username = st.text_input("Username", value="Demo User")
 
 # Select role and write achievement
 role = st.selectbox(
@@ -46,10 +45,15 @@ if st.button("Save & Generate STAR"):
         st.warning("Please enter an achievement.")
     else:
         with SessionLocal() as s:
-            user = get_or_create_user(s, new_username, role)#ensure_demo_user(s)
+            user = get_or_create_user(s, new_username, role)
             ach = create_achievement(s, user.id, role, raw.strip())
             story = generate_star(s, user.id, ach.id, role, raw.strip())
             s.commit()
 
             st.success(f"✅ User `{user.display_name}` saved (id: {user.id}). STAR story created.")
             st.text_area("Generated STAR Story", value=story.full_text or "", height=220)
+
+            time.sleep(5) 
+            st.toast("Redirecting to STAR Stories...", icon="➡️")
+            time.sleep(3) 
+            st.switch_page("pages/02_🧩_STAR_Stories.py")
