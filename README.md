@@ -1,4 +1,3 @@
-# Team_Data_Avengers
 # AI-Powered Interview & Career Growth Tool  
 Serverless Stack: **Streamlit + PostgreSQL + OpenAI**
 
