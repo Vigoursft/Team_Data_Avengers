@@ -17,3 +17,10 @@ cp .env.example .env               # fill your OPENAI_API_KEY & DATABASE_URL
 psql "$DATABASE_URL" -f scripts/init_db.sql
 
 streamlit run AI_Career_Coach.py
+
+
+#Run Tests from Project Root
+pytest
+
+#or with coverage:
+pytest --cov=src --cov-report=term-missing
