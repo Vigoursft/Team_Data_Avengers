@@ -81,20 +81,26 @@ else:
 @st.cache_data(ttl=30)
 def load_combined_metrics():
     query = text("""
-    SELECT
-    COALESCE(a.date, s.date) AS date,
-    COALESCE(achievements_logged, 0) AS achievements_logged,
-    COALESCE(star_stories_generated, 0) AS star_stories_generated
+     SELECT
+        COALESCE(a.date, COALESCE(s.date, f.date)) AS date,
+        COALESCE(achievements_logged, 0) AS achievements_logged,
+        COALESCE(star_stories_generated, 0) AS star_stories_generated,
+        COALESCE(feedback_logged, 0) AS feedback_logged
     FROM (
-    SELECT DATE(created_at) AS date, COUNT(*) AS achievements_logged
-    FROM achievements
-    GROUP BY DATE(created_at)
+        SELECT DATE(created_at) AS date, COUNT(*) AS achievements_logged
+        FROM achievements
+        GROUP BY DATE(created_at)
     ) a
     FULL OUTER JOIN (
-    SELECT DATE(created_at) AS date, COUNT(*) AS star_stories_generated
-    FROM star_stories
-    GROUP BY DATE(created_at)
+        SELECT DATE(created_at) AS date, COUNT(*) AS star_stories_generated
+        FROM star_stories
+        GROUP BY DATE(created_at)
     ) s ON a.date = s.date
+    FULL OUTER JOIN (
+        SELECT DATE(created_at) AS date, COUNT(*) AS feedback_logged
+        FROM feedback
+        GROUP BY DATE(created_at)
+    ) f ON COALESCE(a.date, s.date) = f.date
     ORDER BY date
     """)
     with engine.begin() as conn:
