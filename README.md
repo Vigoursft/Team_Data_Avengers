@@ -16,4 +16,4 @@ cp .env.example .env               # fill your OPENAI_API_KEY & DATABASE_URL
 # Initialize database:
 psql "$DATABASE_URL" -f scripts/init_db.sql
 
-streamlit run app.py
+streamlit run AI_Career_Coach.py
