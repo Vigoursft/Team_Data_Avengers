@@ -54,7 +54,7 @@ with SessionLocal() as s:
                         n=3
                     )
                     s.commit()
-                    st.success(f"✅ {len(qs)} questions saved.")
+                    st.success(f"✅ {len(qs)} questions generated.")
 
                 # List existing questions
                 qs = list(s.execute(
