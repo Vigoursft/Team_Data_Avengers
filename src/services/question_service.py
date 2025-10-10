@@ -5,7 +5,7 @@ from src.ai.prompts import QUEST_SYS, QUEST_USER
 import json
 import re
 
-def generate_questions(session: Session, user_id: int, achievement_id: int, star_text: str, n=5):
+def generate_questions(session: Session, user_id: int, achievement_id: int, star_text: str, n=3):
     data, usage, model = chat_json([
         {"role": "system", "content": QUEST_SYS},
         {"role": "user", "content": QUEST_USER.format(n=n, star=star_text)}
