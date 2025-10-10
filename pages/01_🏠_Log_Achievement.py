@@ -5,8 +5,12 @@ from src.db.crud import ensure_demo_user, create_achievement, get_or_create_user
 from src.services.star_service import generate_star
 from src.db.models import User
 import time
+from sidebar import render_sidebar
 
 st.set_page_config(page_title="Log Achievement", layout="wide")
+# Call sidebar render function
+render_sidebar()
+
 st.header("🏠 Log Achievement → Generate STAR")
 
 # --- Initialize session state for button ---

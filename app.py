@@ -1,6 +1,11 @@
 import streamlit as st
+from sidebar import render_sidebar
 
-st.set_page_config(page_title="AI Career Coach", page_icon="🤖", layout="wide")
+st.set_page_config(page_title="AI Career Coach", page_icon="favicon-32x32-1.png", layout="wide")
+
+# Call sidebar render function
+render_sidebar()
+
 st.title("AI-Powered Interview & Career Growth Tool")
 
 st.page_link("pages/01_🏠_Log_Achievement.py", label="Log Achievement & Generate STAR")

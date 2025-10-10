@@ -3,9 +3,13 @@ from sqlalchemy import select, desc
 from src.db.engine import SessionLocal
 from src.db.models import StarStory, InterviewQuestion, User
 from src.services.question_service import generate_questions
+from sidebar import render_sidebar
 
-st.set_page_config(page_title="STAR Stories", layout="wide")
+st.set_page_config(page_title="STAR Stories", page_icon="favicon-32x32-1.png", layout="wide")
 st.header("🧩 STAR Stories & Questions")
+
+# Call sidebar render function
+render_sidebar()
 
 with SessionLocal() as s:
     stories = list(s.execute(

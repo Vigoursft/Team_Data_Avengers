@@ -3,9 +3,13 @@ from sqlalchemy import select, desc
 from src.db.engine import SessionLocal
 from src.db.models import InterviewQuestion, User
 from src.services.feedback_service import generate_feedback
+from sidebar import render_sidebar
 
-st.set_page_config(page_title="Mock Interview", layout="wide")
+st.set_page_config(page_title="Mock Interview", page_icon="favicon-32x32-1.png", layout="wide")
 st.header("🗣️ Mock Interview & Feedback")
+
+# Call sidebar render function
+render_sidebar()
 
 with SessionLocal() as s:
     # Step 1: Load distinct users

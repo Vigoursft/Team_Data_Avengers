@@ -3,9 +3,13 @@ import pandas as pd
 from sqlalchemy import text
 from src.db.engine import engine, SessionLocal
 from src.db.crud import dashboard_stats
+from sidebar import render_sidebar
 
-st.set_page_config(page_title="Dashboard", layout="wide")
+st.set_page_config(page_title="Dashboard", page_icon="favicon-32x32-1.png", layout="wide")
 st.header("📊 Dashboard")
+
+# Call sidebar render function
+render_sidebar()
 
 # KPIs
 with SessionLocal() as s:
