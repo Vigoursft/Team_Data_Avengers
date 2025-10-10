@@ -50,6 +50,7 @@ redirect_placeholder = st.empty()
 
 # Action: Save achievement & generate STAR story
 if st.button("Save & Generate STAR", disabled=st.session_state.star_generated):
+    st.session_state.star_generated = True
     if not raw.strip():
         st.warning("Please enter an achievement.")
     else:
@@ -63,9 +64,13 @@ if st.button("Save & Generate STAR", disabled=st.session_state.star_generated):
                 st.success(f"✅ User `{user.display_name}` saved. STAR story created.")
                 st.text_area("Generated STAR Story", value=story.full_text or "", height=220)
 
-        st.session_state.star_generated = True
     
         with redirect_placeholder.container():
             with st.spinner("Redirecting to STAR Stories..."):
                 time.sleep(5) 
+
+        # Remember which to expand on next page
+        st.session_state["last_user_id"] = user.id
+        st.session_state["last_star_id"] = story.id
+        
         st.switch_page("pages/02_🧩_STAR_Stories.py")
