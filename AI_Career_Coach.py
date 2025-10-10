@@ -12,4 +12,5 @@ st.page_link("pages/01_🏠_Log_Achievement.py", label="Log Achievement & Genera
 st.page_link("pages/02_🧩_STAR_Stories.py", label="STAR Stories & Questions")
 st.page_link("pages/03_🗣️_Mock_Interview.py", label="Mock Interview & Feedback")
 st.page_link("pages/04_📊_Dashboard.py", label="Dashboard")
-st.page_link("pages/05_👤_Profile.py", label="Profile")
+st.page_link("pages/05_📘_Mock_QA_Archive.py", label="Mock Q&A Archive")
+st.page_link("pages/06_👤_Profile.py", label="Profile")
