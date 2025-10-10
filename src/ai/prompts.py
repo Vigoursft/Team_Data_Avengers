@@ -1,3 +1,18 @@
+ACH_VALIDATOR_SYS = "Classify if the text is a concrete work achievement suitable for STAR."
+
+ACH_VALIDATOR_USER = """You are validating whether the following text is a concrete work achievement suitable for STAR interview prep.
+
+Text:
+{raw}
+
+If it is vague, extremely short, or clearly placeholder (e.g., "test", "abc"), mark valid=false.
+
+Return STRICT JSON in this exact format:
+{{{{"valid": true|false, "reason": "short reason", "missing": ["action","impact","scope"]}}}}
+No explanations or markdown.
+"""
+
+
 STAR_SYS = "You are a career coach who writes concise, interview-ready STAR stories for software engineers."
 
 STAR_USER = """Role: {role}

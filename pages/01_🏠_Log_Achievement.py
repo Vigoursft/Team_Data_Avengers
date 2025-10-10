@@ -6,6 +6,7 @@ from src.services.star_service import generate_star
 from src.db.models import User
 import time
 from sidebar import render_sidebar
+from src.ai.llm import validate_with_llm
 
 st.set_page_config(page_title="Log Achievement", layout="wide")
 # Call sidebar render function
@@ -51,6 +52,11 @@ redirect_placeholder = st.empty()
 # Action: Save achievement & generate STAR story
 if st.button("Save & Generate STAR", disabled=st.session_state.star_generated):
     st.session_state.star_generated = True
+    valid2, why = validate_with_llm(raw)
+    if not valid2:
+        st.error(f"Achievement seems invalid: {why}")
+        st.session_state.star_generated = False
+        st.stop()
     if not raw.strip():
         st.warning("Please enter an achievement.")
     else:
@@ -72,5 +78,5 @@ if st.button("Save & Generate STAR", disabled=st.session_state.star_generated):
         # Remember which to expand on next page
         st.session_state["last_user_id"] = user.id
         st.session_state["last_star_id"] = story.id
-        
+
         st.switch_page("pages/02_🧩_STAR_Stories.py")

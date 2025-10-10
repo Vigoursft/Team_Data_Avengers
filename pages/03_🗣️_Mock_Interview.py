@@ -1,7 +1,7 @@
 import streamlit as st
 from sqlalchemy import select, desc
 from src.db.engine import SessionLocal
-from src.db.models import InterviewQuestion, User
+from src.db.models import InterviewQuestion, User, InterviewAnswer
 from src.services.feedback_service import generate_feedback
 from sidebar import render_sidebar
 
@@ -26,9 +26,11 @@ selected_user = user_map[selected_user_name]
 
 # Step 3: Load questions for selected user
 with SessionLocal() as s:
+    answered_qs = select(InterviewAnswer.question_id)
     questions = s.execute(
         select(InterviewQuestion)
         .where(InterviewQuestion.user_id == selected_user.id)
+        .where(InterviewQuestion.id.not_in(answered_qs))
         .order_by(desc(InterviewQuestion.created_at))
         .limit(50)
     ).scalars().all()
