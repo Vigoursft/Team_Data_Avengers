@@ -41,3 +41,75 @@ if df is not None and not df.empty:
     st.bar_chart(df, x="day", y="tokens", color="feature")
 else:
     st.info("No token usage data yet.")
+
+
+# def load_achievements():
+#     with engine.begin() as conn:
+#         return pd.read_sql(text("""
+#             SELECT DATE(created_at) AS date,
+#                    COUNT(*) AS achievements_logged
+#             FROM achievements
+#             GROUP BY DATE(created_at)
+#             ORDER BY date DESC;
+#         """), conn)
+
+# df = load_achievements()
+# st.subheader("Achievements logged over time")
+# if df is not None and not df.empty:
+#     st.bar_chart(df, x="date", y="achievements_logged")
+# else:
+#     st.info("No achievements usage data yet.")
+
+# def load_star_stories():
+#     with engine.begin() as conn:
+#         return pd.read_sql(text("""
+#             SELECT DATE(created_at) AS date,
+#                    COUNT(*) AS star_stories_generated
+#             FROM star_stories
+#             GROUP BY DATE(created_at)
+#             ORDER BY date DESC;
+#         """), conn)
+
+# df = load_star_stories()
+# st.subheader("STAR stories logged over time")
+# if df is not None and not df.empty:
+#     st.bar_chart(df, x="date", y="star_stories_generated")
+# else:
+#     st.info("No STAR stories usage data yet.")
+
+
+@st.cache_data(ttl=30)
+def load_combined_metrics():
+    query = text("""
+    SELECT
+    COALESCE(a.date, s.date) AS date,
+    COALESCE(achievements_logged, 0) AS achievements_logged,
+    COALESCE(star_stories_generated, 0) AS star_stories_generated
+    FROM (
+    SELECT DATE(created_at) AS date, COUNT(*) AS achievements_logged
+    FROM achievements
+    GROUP BY DATE(created_at)
+    ) a
+    FULL OUTER JOIN (
+    SELECT DATE(created_at) AS date, COUNT(*) AS star_stories_generated
+    FROM star_stories
+    GROUP BY DATE(created_at)
+    ) s ON a.date = s.date
+    ORDER BY date
+    """)
+    with engine.begin() as conn:
+        return pd.read_sql(query, conn)
+
+
+df = load_combined_metrics()
+
+st.subheader("📈 Achievements and STAR Stories Logged Per Day")
+
+if df is not None and not df.empty:
+    df["date"] = pd.to_datetime(df["date"])
+    df.set_index("date", inplace=True)
+    st.bar_chart(df)
+else:
+    st.info("No data to display yet.")
+
+
