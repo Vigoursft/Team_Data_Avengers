@@ -13,7 +13,6 @@ st.caption("Browse all user's interview questions, answers, and feedback.")
 with SessionLocal() as session:
     users = session.execute(select(User).order_by(User.display_name)).scalars().all()
 
-    # Call sidebar render function
     render_sidebar()
 
     if not users:

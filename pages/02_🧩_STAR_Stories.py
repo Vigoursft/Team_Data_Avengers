@@ -15,12 +15,7 @@ last_star_id = st.session_state.get("last_star_id")
 render_sidebar()
 
 with SessionLocal() as s:
-    # stories = list(s.execute(
-    #     select(StarStory).order_by(desc(StarStory.created_at)).limit(25)
-    # ).scalars())
     q = select(StarStory).order_by(desc(StarStory.created_at)).limit(50)
-    # if last_user_id is not None:
-    #     q = q.where(StarStory.user_id == last_user_id)
     stories = list(s.execute(q).scalars())
 
     if not stories:

@@ -43,41 +43,6 @@ else:
     st.info("No token usage data yet.")
 
 
-# def load_achievements():
-#     with engine.begin() as conn:
-#         return pd.read_sql(text("""
-#             SELECT DATE(created_at) AS date,
-#                    COUNT(*) AS achievements_logged
-#             FROM achievements
-#             GROUP BY DATE(created_at)
-#             ORDER BY date DESC;
-#         """), conn)
-
-# df = load_achievements()
-# st.subheader("Achievements logged over time")
-# if df is not None and not df.empty:
-#     st.bar_chart(df, x="date", y="achievements_logged")
-# else:
-#     st.info("No achievements usage data yet.")
-
-# def load_star_stories():
-#     with engine.begin() as conn:
-#         return pd.read_sql(text("""
-#             SELECT DATE(created_at) AS date,
-#                    COUNT(*) AS star_stories_generated
-#             FROM star_stories
-#             GROUP BY DATE(created_at)
-#             ORDER BY date DESC;
-#         """), conn)
-
-# df = load_star_stories()
-# st.subheader("STAR stories logged over time")
-# if df is not None and not df.empty:
-#     st.bar_chart(df, x="date", y="star_stories_generated")
-# else:
-#     st.info("No STAR stories usage data yet.")
-
-
 @st.cache_data(ttl=30)
 def load_combined_metrics():
     query = text("""
@@ -109,7 +74,7 @@ def load_combined_metrics():
 
 df = load_combined_metrics()
 
-st.subheader("📈 Achievements and STAR Stories Logged Per Day")
+st.subheader("📈 Achievements, STAR Stories & Feedback Logged Per Day")
 
 if df is not None and not df.empty:
     df["date"] = pd.to_datetime(df["date"])
